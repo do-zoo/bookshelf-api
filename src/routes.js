@@ -1,13 +1,12 @@
-import type { ServerRoute } from '@hapi/hapi'
-import {
+const {
   createBookshelfHandler,
   deleteBookshelfHandler,
   getAllBookshelfHandler,
   getBookshelfByIdHandler,
   updateBookshelfHandler,
-} from './handlers'
+} = require('./handlers')
 
-export const routes: ServerRoute[] = [
+const routes = [
   {
     method: 'GET',
     path: '/books',
@@ -34,3 +33,5 @@ export const routes: ServerRoute[] = [
     handler: deleteBookshelfHandler,
   },
 ]
+
+module.exports = routes

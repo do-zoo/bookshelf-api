@@ -4,22 +4,17 @@
         "commonjs": true,
         "es2021": true
     },
-    "parser": "@typescript-eslint/parser",
     "plugins": [
-        "@typescript-eslint",
         "prettier"
     ],
     "extends": [
         "eslint:recommended",
-        "plugin:@hapi/recommended",
-        "plugin:@typescript-eslint/recommended",
         "prettier"
     ],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
     "rules": {
-        "@typescript-eslint/no-unused-vars": "warn",
-        "@hapi/scope-start": "off"
-    }
+        "no-unused-vars": "warn"
+      }
 }

@@ -1,20 +1,8 @@
-import { Request, ResponseToolkit } from '@hapi/hapi'
-import { v4 as uuidv4 } from 'uuid'
-import books from '../books'
-import * as _ from 'lodash'
+const { nanoid } = require('nanoid')
+const books = require('../books')
+const _ = require('lodash')
 
-interface CreatePayload {
-  name: string
-  year: number
-  author: string
-  summary: string
-  publisher: string
-  pageCount: number
-  readPage: number
-  reading: boolean
-}
-
-const validPayloadKeys: Array<keyof CreatePayload> = [
+const validPayloadKeys = [
   'reading',
   'readPage',
   'pageCount',
@@ -25,10 +13,7 @@ const validPayloadKeys: Array<keyof CreatePayload> = [
   'year',
 ]
 
-const REQUIRED_FIELD: Array<{
-  key: keyof CreatePayload
-  label: string
-}> = [
+const REQUIRED_FIELD = [
   {
     key: 'name',
     label: 'nama buku',
@@ -39,11 +24,8 @@ const REQUIRED_FIELD: Array<{
   },
 ]
 
-export const createBookshelfHandler = (
-  request: Request,
-  h: ResponseToolkit,
-) => {
-  const payload = request.payload as CreatePayload
+module.exports = (request, h) => {
+  const payload = request.payload
   const payloadKey = Object.keys(payload)
   const invalidPayload = REQUIRED_FIELD.filter(
     (field) => !payloadKey.includes(field.key),
@@ -75,7 +57,7 @@ export const createBookshelfHandler = (
     return response
   }
 
-  const id = uuidv4()
+  const id = nanoid()
   const insertedAt = new Date().toISOString()
   const updatedAt = insertedAt
   const finished = Boolean(readPage === payload.pageCount)

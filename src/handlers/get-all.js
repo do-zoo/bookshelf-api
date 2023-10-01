@@ -1,17 +1,7 @@
-import books from '../books'
-import { Request, ResponseToolkit } from '@hapi/hapi'
+const books = require('../books')
 
-interface QueryParams {
-  reading?: '1' | '0'
-  finished?: '1' | '0'
-  name?: string
-}
-
-export const getAllBookshelfHandler = (
-  request: Request,
-  h: ResponseToolkit,
-) => {
-  const params = request.query as QueryParams
+module.exports = (request, h) => {
+  const params = request.query
 
   const mappedBooks = books
     .filter((book) => {

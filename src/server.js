@@ -1,8 +1,9 @@
-import { Server } from '@hapi/hapi'
-import { routes } from './routes'
+const Hapi = require('@hapi/hapi')
+const routes = require('./routes')
+const process = require('node:process')
 
 const init = async () => {
-  const server: Server = new Server({
+  const server = Hapi.Server({
     port: 9000,
     host: 'localhost',
     routes: {
@@ -11,9 +12,11 @@ const init = async () => {
       },
     },
   })
+
   server.route(routes)
+
   await server.start()
-  console.log('Server running on %s', server.info.uri)
+  console.log(`Server berjalan pada ${server.info.uri}`)
 }
 
 process.on('unhandledRejection', (err) => {

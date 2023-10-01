@@ -1,11 +1,7 @@
-import books from '../books'
-import { Request, ResponseToolkit } from '@hapi/hapi'
+const books = require('../books')
 
-export const getBookshelfByIdHandler = (
-  request: Request,
-  h: ResponseToolkit,
-) => {
-  const { bookId } = request.params as { bookId: string }
+module.exports = (request, h) => {
+  const { bookId } = request.params
   const book = books.find((b) => b.id === bookId)
 
   if (book) {

@@ -1,19 +1,9 @@
-import { Request, ResponseToolkit } from '@hapi/hapi'
-import books from '../books'
-import * as _ from 'lodash'
+'use strict'
 
-interface UpdatePayload {
-  name: string
-  year?: number
-  author?: string
-  summary?: string
-  publisher?: string
-  pageCount?: number
-  readPage?: number
-  reading?: boolean
-}
+const books = require('../books')
+const _ = require('lodash')
 
-const validPayloadKeys: Array<keyof UpdatePayload> = [
+const validPayloadKeys = [
   'reading',
   'readPage',
   'pageCount',
@@ -24,21 +14,15 @@ const validPayloadKeys: Array<keyof UpdatePayload> = [
   'year',
 ]
 
-const REQUIRED_FIELD: Array<{
-  key: keyof UpdatePayload
-  label: string
-}> = [
+const REQUIRED_FIELD = [
   {
     key: 'name',
     label: 'nama buku',
   },
 ]
 
-export const updateBookshelfHandler = (
-  request: Request,
-  h: ResponseToolkit,
-) => {
-  const payload = request.payload as UpdatePayload
+module.exports = (request, h) => {
+  const payload = request.payload
   const payloadKey = Object.keys(payload)
   const invalidPayload = REQUIRED_FIELD.filter(
     (field) => !payloadKey.includes(field.key),
@@ -70,7 +54,7 @@ export const updateBookshelfHandler = (
     return response
   }
 
-  const { bookId } = request.params as { bookId: string }
+  const { bookId } = request.params
   const bookIndex = books.findIndex((b) => b.id === bookId)
 
   if (bookIndex !== -1) {
