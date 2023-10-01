@@ -10,18 +10,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const hapi_1 = require("@hapi/hapi");
+const routes_1 = require("./routes");
 const init = () => __awaiter(void 0, void 0, void 0, function* () {
     const server = new hapi_1.Server({
-        port: 3000,
-        host: 'localhost'
+        port: 9000,
+        host: 'localhost',
+        routes: {
+            cors: {
+                origin: ['*'],
+            },
+        },
     });
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, h) => {
-            return 'Hello World!';
-        }
-    });
+    server.route(routes_1.routes);
     yield server.start();
     console.log('Server running on %s', server.info.uri);
 });
