@@ -1,5 +1,7 @@
 node_modules
 postman
+dist
+
 .env
 .env.*
 .idea
